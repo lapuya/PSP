@@ -2,7 +2,7 @@ package requerimiento2y3;
 
 import java.util.ArrayList;
 
-public class Main {
+public class Main { //Creación del buffer, productores,consumidores e hilos
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

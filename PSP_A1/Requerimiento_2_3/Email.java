@@ -1,6 +1,6 @@
 package requerimiento2y3;
 
-public class Email {
+public class Email { //Creación del objeto email con sus atributos, constructores,setters y getters
 	
 	private String id;
 	private String destinatario;

@@ -12,7 +12,7 @@ public class ConsumidorEmails implements Runnable {
 	}
 	
 	@Override
-	public void run() {
+	public void run() { //Método que consume los emails
 		// TODO Auto-generated method stub
 		for (int i = 0; i <= 15; i++)
 		{

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class GeneradorEmails {
+public class GeneradorEmails { //Generamos los campos del email aleatoriamente
 	
 	public Email generarEmail()
 	{

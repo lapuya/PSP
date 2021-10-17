@@ -1,6 +1,9 @@
 package requerimiento2y3;
 
 public class ProductorEmails implements Runnable {
+	/**
+	 * Clase que genera emails y los manda a la cola
+	 */
 	
 	private String nombre;
 	private Buffer buffer;
