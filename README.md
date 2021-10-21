@@ -3,7 +3,7 @@
 Aquí se subirán las actividades grupales de esta asignatura.
 
 ## Autores
-Daniel Alberich Mayoral
-Sarah Amselem Felices
-Iván Pérez Martínez
-Laurence Apuya Pangilinan
+* Daniel Alberich Mayoral
+* Sarah Amselem Felices
+* Iván Pérez Martínez
+* Laurence Apuya Pangilinan
