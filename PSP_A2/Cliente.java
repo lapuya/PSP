@@ -45,7 +45,8 @@ public class Cliente {
 				System.out.println("");
 				System.out.println("1-Consultar libro por ISBN.");
 				System.out.println("2-Consultar libro por título.");
-				System.out.println("3-Salir de la aplicación;");
+				System.out.println("3-Consultar libro por autor.");
+				System.out.println("4-Salir de la aplicación;");
 
 				// Se pide número por pantalla para utilizar el menú
 				String n = sc.nextLine();
@@ -84,12 +85,23 @@ public class Cliente {
 
 					System.out.println("CLIENTE: Esperando al resultado del servidor...");
 					resultado = bf.readLine();
-					System.out.println("CLIENTE: El resultado de la búsqueda es: " + resultado.toString());
+					System.out.println("CLIENTE: El resultado de la búsqueda es: " + resultado);
 
 					break;
 
 				case "3":
-					busqueda = "3";
+					System.out.println("Introduzca el autor: ");
+
+					busqueda = sc.nextLine() + "-3";
+
+					salida.println(busqueda);
+					System.out.println("CLIENTE: Esperando al resultado del servidor...");
+					resultado = bf.readLine();
+					System.out.println("CLIENTE: El resultado de la búsqueda es: " + resultado);
+
+					break;
+				case "4":
+					busqueda = "4";
 					salida.println(busqueda);
 					resultado = bf.readLine();
 					System.out.println("CLIENTE: El resultado del servidor es " + resultado);
@@ -99,7 +111,6 @@ public class Cliente {
 				default:
 					break;
 				}
-
 			} while (continuar);
 			socketServidor.close();
 		} catch (UnknownHostException e) {

@@ -13,17 +13,8 @@ public class SocketServidor {
 		//Carga de Libros preestablecidos
 		//-----------------------------------------------------------------------------------
 		ArrayList<Libro> libros = new ArrayList<Libro>();
-		Libro l1 = new Libro("1234", "La sombra del viento", "Carlos Ruiz Zafon", 10.95);
-		Libro l2 = new Libro("5678", "The Lord of the Rings", "J.R.R. Tolkien", 19.90);
-		Libro l3 = new Libro("4321", "El Codigo da Vinci", "Dan Brown", 16.95);
-		Libro l4 = new Libro("8765", "El diario de Ana Frank", "Anna Frank", 12.00);
-		Libro l5 = new Libro("1111", "Fundacion", "Isaac Asimov", 14.20);
-		//añadir libros
-		libros.add(l1);
-		libros.add(l2);
-		libros.add(l3);
-		libros.add(l4);
-		libros.add(l5);
+		libros = cargarLibros();
+
 		//-----------------------------------------------------------------------------------
 
 		System.out.println("          APLICACIÓN SERVIDOR          ");
@@ -56,6 +47,25 @@ public class SocketServidor {
 			System.err.println("SERVIDOR: Error -> " + e);
 			e.printStackTrace();
 		}
+	}
+
+	private static ArrayList<Libro> cargarLibros() {
+
+		ArrayList<Libro> libros = new ArrayList<Libro>();
+
+		Libro l1 = new Libro("1234", "La sombra del viento", "Carlos Ruiz Zafon", 10.95);
+		Libro l2 = new Libro("5678", "El juego del Ángel", "Carlos Ruiz Zafon", 19.90);
+		Libro l3 = new Libro("4321", "El Codigo da Vinci", "Dan Brown", 16.95);
+		Libro l4 = new Libro("8765", "El diario de Ana Frank", "Anna Frank", 12.00);
+		Libro l5 = new Libro("1111", "Fundacion", "Isaac Asimov", 14.20);
+		//añadir libros
+		libros.add(l1);
+		libros.add(l2);
+		libros.add(l3);
+		libros.add(l4);
+		libros.add(l5);
+
+		return libros;
 	}
 
 }
