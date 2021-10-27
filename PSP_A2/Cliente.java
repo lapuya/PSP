@@ -20,7 +20,7 @@ public class Cliente {
 
 		InetSocketAddress direccionServidor = new InetSocketAddress(IP_SERVER, PUERTO);
 
-		try (Scanner sc = new Scanner(System.in); Socket socketServidor = new Socket();) {
+		try (Scanner sc = new Scanner(System.in)) {
 
 			boolean continuar = true;
 
@@ -37,6 +37,8 @@ public class Cliente {
 
 				// Se pide número por pantalla para utilizar el menú
 				String n = sc.nextLine();
+
+				Socket socketServidor = new Socket();
 
 				switch (n) {
 
@@ -96,6 +98,7 @@ public class Cliente {
 				default:
 					break;
 				}
+				socketServidor.close();
 
 			} while (continuar);
 		} catch (UnknownHostException e) {
