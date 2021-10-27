@@ -34,25 +34,35 @@ public class HiloBiblioteca implements Runnable {
 			BufferedReader bf = new BufferedReader(entrada); //lee la linea de entrada
 			while(continuar) {
 				String stringRecibido = bf.readLine();
-				System.out.println("SERVIDOR BIBLIOTECA: formato recibido: " + stringRecibido);
-				if(stringRecibido.equals("4"))
+				System.out.println("HILO BIBLIOTECA: formato recibido: " + stringRecibido);
+				if(stringRecibido.equals("5"))
 				{
 					System.out.println(hilo.getName() + " ha cerrado la comunicacion.");
 					continuar = false;
 					salida.println("OK");
 				} else {
 					String[] info = stringRecibido.split("-");
-					String formato = info[0];
-					String tipo = info[1];
-					analizarYBuscar(tipo, formato, libros, salida, socketAlCliente);
+					if (info.length == 2) //Si al hacer split solo tenemos 2, es una operacion de consulta
+					{
+						String formato = info[0];
+						String tipo = info[1];
+						analizarYBuscar(tipo, formato, libros, salida, socketAlCliente);
+					} else { //si hay mas es el de añadir
+						Libro l = new Libro(info[0], info[1], info[2], Double.parseDouble(info[3]));
+						libros.add(l);
+						System.out.println("HILO BIBLIOTECA: Libro añadido");
+						salida = new PrintStream(socketAlCliente.getOutputStream());
+						salida.println("OK");
+					}
+
 				}
 			}
 			socketAlCliente.close();
 		} catch (IOException e) {
-			System.err.println("Hilo Biblioteca: Error de entrada/salida");
+			System.err.println("HILO BIBLIOTECA: Error de entrada/salida");
 			e.printStackTrace();
 		} catch (Exception e) {
-			System.err.println("Hilo Biblioteca: Error");
+			System.err.println("HILO BIBLIOTECA: Error");
 			e.printStackTrace();
 		}
 	}

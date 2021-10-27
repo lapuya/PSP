@@ -15,7 +15,7 @@ public class Cliente {
 	public static void main(String[] args) throws IOException {
 
 		String resultado;
-
+		StringBuilder sb = new StringBuilder();
 		System.out.println("----------------------------------");
 		System.out.println("--------BIBLIOTECA VIRTUAL--------");
 		System.out.println("----------------------------------");
@@ -46,7 +46,8 @@ public class Cliente {
 				System.out.println("1-Consultar libro por ISBN.");
 				System.out.println("2-Consultar libro por título.");
 				System.out.println("3-Consultar libro por autor.");
-				System.out.println("4-Salir de la aplicación;");
+				System.out.println("4-Añadir libro.");
+				System.out.println("5-Salir de la aplicación;");
 
 				// Se pide número por pantalla para utilizar el menú
 				String n = sc.nextLine();
@@ -101,7 +102,29 @@ public class Cliente {
 
 					break;
 				case "4":
-					busqueda = "4";
+					System.out.println("Introduzca los datos del libro a añadir.");
+					System.out.println("ISBN: ");
+					sb.append(sc.nextLine());
+					sb.append("-");
+					System.out.println("Titulo: ");
+					sb.append(sc.nextLine());
+					sb.append("-");
+					System.out.println("Autor: ");
+					sb.append(sc.nextLine());
+					sb.append("-");
+					System.out.println("Precio: ");
+					sb.append(sc.nextLine());
+
+					String libro = sb.toString();
+					System.out.println(libro);
+					salida.println(libro);
+					System.out.println("CLIENTE: Esperando al resultado del servidor...");
+					resultado = bf.readLine();
+					System.out.println("CLIENTE: El resultado de la operación es: " + resultado);
+					break;
+
+				case "5":
+					busqueda = "5";
 					salida.println(busqueda);
 					resultado = bf.readLine();
 					System.out.println("CLIENTE: El resultado del servidor es " + resultado);
