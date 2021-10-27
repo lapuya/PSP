@@ -14,6 +14,8 @@ public class Cliente {
 
 	public static void main(String[] args) throws IOException {
 
+		String resultado;
+
 		System.out.println("----------------------------------");
 		System.out.println("--------BIBLIOTECA VIRTUAL--------");
 		System.out.println("----------------------------------");
@@ -23,6 +25,16 @@ public class Cliente {
 		try (Scanner sc = new Scanner(System.in)) {
 
 			boolean continuar = true;
+			// Conectando el Socket con el servidor.
+			System.out.println("CLIENTE: Esperando a que el servidor acepte la conexión");
+			Socket socketServidor = new Socket();
+			socketServidor.connect(direccionServidor);
+			System.out.println("CLIENTE: Conexion establecida... a " + IP_SERVER + " por el puerto " + PUERTO);
+			InputStreamReader entrada = new InputStreamReader(socketServidor.getInputStream());
+			BufferedReader bf = new BufferedReader(entrada);
+
+			// Lo que envía el Socket.
+			PrintStream salida = new PrintStream(socketServidor.getOutputStream());
 
 			// Bucle do-while para poder hacer tantas peticiones de libros como se quiera
 			// hasta que se introduzca un 3.
@@ -38,7 +50,7 @@ public class Cliente {
 				// Se pide número por pantalla para utilizar el menú
 				String n = sc.nextLine();
 
-				Socket socketServidor = new Socket();
+
 
 				switch (n) {
 
@@ -51,20 +63,12 @@ public class Cliente {
 					// un '-'.
 					String busqueda = sc.nextLine() + "-1";
 
-					// Conectando el Socket con el servidor.
-					System.out.println("CLIENTE: Esperando a que el servidor acepte la conexión");
-					socketServidor.connect(direccionServidor);
-					System.out.println("CLIENTE: Conexion establecida... a " + IP_SERVER + " por el puerto " + PUERTO);
 
-					// Lo que envía el Socket.
-					PrintStream salida = new PrintStream(socketServidor.getOutputStream());
 					salida.println(busqueda);
 
 					// Lo que trae de vuelta el Socket.
 					System.out.println("CLIENTE: Esperando al resultado del servidor...");
-					InputStreamReader entrada = new InputStreamReader(socketServidor.getInputStream());
-					BufferedReader bf = new BufferedReader(entrada);
-					String resultado = bf.readLine();
+					resultado = bf.readLine();
 					System.out.println("CLIENTE: El resultado de la búsqueda es: " + resultado.toString());
 
 					break;
@@ -76,31 +80,28 @@ public class Cliente {
 					// Le añado el 'tipo' de dato que le estoy mandando (ISBN o título)
 					busqueda = sc.nextLine() + "-2";
 
-					System.out.println("CLIENTE: Esperando a que el servidor acepte la conexión");
-					socketServidor.connect(direccionServidor);
-					System.out.println("CLIENTE: Conexion establecida... a " + IP_SERVER + " por el puerto " + PUERTO);
-
-					salida = new PrintStream(socketServidor.getOutputStream());
 					salida.println(busqueda);
 
 					System.out.println("CLIENTE: Esperando al resultado del servidor...");
-					entrada = new InputStreamReader(socketServidor.getInputStream());
-					bf = new BufferedReader(entrada);
 					resultado = bf.readLine();
 					System.out.println("CLIENTE: El resultado de la búsqueda es: " + resultado.toString());
 
 					break;
 
 				case "3":
+					busqueda = "3";
+					salida.println(busqueda);
+					resultado = bf.readLine();
+					System.out.println("CLIENTE: El resultado del servidor es " + resultado);
 					continuar = false;
 					break;
 
 				default:
 					break;
 				}
-				socketServidor.close();
 
 			} while (continuar);
+			socketServidor.close();
 		} catch (UnknownHostException e) {
 			System.err.println("CLIENTE: No encuentro el servidor en la dirección" + IP_SERVER);
 			e.printStackTrace();
