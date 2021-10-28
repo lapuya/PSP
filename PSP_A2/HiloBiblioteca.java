@@ -12,7 +12,7 @@ public class HiloBiblioteca implements Runnable {
 	private Socket socketAlCliente;
 	private ArrayList<Libro> libros = new ArrayList<Libro>();
 
-	public HiloBiblioteca (Socket socketAlCliente, ArrayList <Libro> libros) {
+	public HiloBiblioteca(Socket socketAlCliente, ArrayList<Libro> libros) {
 		numCliente++;
 		this.libros = libros;
 		hilo = new Thread(this, "Cliente_" + numCliente);
@@ -31,30 +31,28 @@ public class HiloBiblioteca implements Runnable {
 		try {
 			salida = new PrintStream(socketAlCliente.getOutputStream());
 			entrada = new InputStreamReader(socketAlCliente.getInputStream());
-			BufferedReader bf = new BufferedReader(entrada); //lee la linea de entrada
-			while(continuar) {
+			BufferedReader bf = new BufferedReader(entrada); // lee la linea de entrada
+			while (continuar) {
 				String stringRecibido = bf.readLine();
 				System.out.println("HILO BIBLIOTECA: formato recibido: " + stringRecibido);
-				if(stringRecibido.equals("5"))
-				{
+				if (stringRecibido.equals("5")) {
 					System.out.println(hilo.getName() + " ha cerrado la comunicacion.");
 					continuar = false;
 					salida.println("OK");
 				} else {
 					String[] info = stringRecibido.split("-");
-					if (info.length == 2) //Si al hacer split solo tenemos 2, es una operacion de consulta
+					if (info.length == 2) // Si al hacer split solo tenemos 2, es una operacion de consulta
 					{
 						String formato = info[0];
 						String tipo = info[1];
 						analizarYBuscar(tipo, formato, libros, salida, socketAlCliente);
-					} else { //si hay mas es el de aÃ±adir
+					} else { // si hay mas es el de añadir
 						Libro l = new Libro(info[0], info[1], info[2], Double.parseDouble(info[3]));
 						libros.add(l);
-						System.out.println("HILO BIBLIOTECA: Libro aÃ±adido");
+						System.out.println("HILO BIBLIOTECA: Libro añadido");
 						salida = new PrintStream(socketAlCliente.getOutputStream());
 						salida.println("OK");
 					}
-
 				}
 			}
 			socketAlCliente.close();
@@ -67,12 +65,13 @@ public class HiloBiblioteca implements Runnable {
 		}
 	}
 
-	private void analizarYBuscar(String tipo, String formato, ArrayList<Libro> libros2, PrintStream salida, Socket socketAlCliente) throws IOException {
+	private void analizarYBuscar(String tipo, String formato, ArrayList<Libro> libros2, PrintStream salida,
+			Socket socketAlCliente) throws IOException {
 		int i = 0;
 		boolean found = false;
-		if (tipo.contains("1")) { //busqueda por isbn
-			while (!found && i < libros.size()){
-				if (libros.get(i).getIsbn().equals(formato)){
+		if (tipo.contains("1")) { // busqueda por isbn
+			while (!found && i < libros.size()) {
+				if (libros.get(i).getIsbn().equals(formato)) {
 					System.out.println("SERVIDOR BIBLIOTECA: Libro encontrado por ISBN");
 					salida = new PrintStream(socketAlCliente.getOutputStream());
 					salida.println(libros.get(i).toString());
@@ -80,7 +79,7 @@ public class HiloBiblioteca implements Runnable {
 				} else
 					i++;
 			}
-		} else if (tipo.contains("2")){ //Busqueda por titulo
+		} else if (tipo.contains("2")) { // Busqueda por titulo
 			while (!found && i < libros.size()) {
 				if (libros.get(i).getTitulo().equals(formato)) {
 					System.out.println("SERVIDOR BIBLIOTECA: Libro encontrado por titulo");
@@ -90,20 +89,22 @@ public class HiloBiblioteca implements Runnable {
 				} else
 					i++;
 			}
-		} else if (tipo.contains("3")) { //Busqueda por autor
+		} else if (tipo.contains("3")) { // Busqueda por autor
 			buscarPorAutor(formato, libros, salida, socketAlCliente);
 		}
 		if (i == libros.size()) {
 			System.out.println("SERVIDOR BIBLIOTECA: Libro no disponible");
 			salida = new PrintStream(socketAlCliente.getOutputStream());
-			salida.println("El libro no estÃ¡ disponible o no se encuentra en la biblioteca");
+			salida.println("El libro no está disponible o no se encuentra en la biblioteca");
 		}
 	}
 
-	private void buscarPorAutor(String autor, ArrayList<Libro> libros, PrintStream salida, Socket socketAlCliente) throws IOException {
+// Implementamos un arrayList para el requerimiento 2, por si hay más de un libro de un solo autor.
+	private void buscarPorAutor(String autor, ArrayList<Libro> libros, PrintStream salida, Socket socketAlCliente)
+			throws IOException {
 		StringBuilder sb = new StringBuilder();
 
-		for(Libro l : libros) {
+		for (Libro l : libros) {
 			if (l.getAutor().equals(autor)) {
 				sb.append("//**//");
 				sb.append(l.toString());

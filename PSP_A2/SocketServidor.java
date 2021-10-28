@@ -10,30 +10,31 @@ public class SocketServidor {
 
 	public static void main(String[] args) {
 
-		//Carga de Libros preestablecidos
-		//-----------------------------------------------------------------------------------
+		// Carga de Libros preestablecidos
+		// -----------------------------------------------------------------------------------
 		ArrayList<Libro> libros = new ArrayList<Libro>();
 		libros = cargarLibros();
 
-		//-----------------------------------------------------------------------------------
+		// -----------------------------------------------------------------------------------
 
-		System.out.println("          APLICACI√ìN SERVIDOR          ");
+		System.out.println("          APLICACI”N SERVIDOR          ");
 		System.out.println("---------------------------------------");
 
-		//Inicializaci√≥n de todas las clases necesarias para el funcionamiento del socket
-		//-----------------------------------------------------------------------------------
+		// InicializaciÛn de todas las clases necesarias para el funcionamiento del
+		// socket
+		// -----------------------------------------------------------------------------------
 		int peticion = 0;
-		//-----------------------------------------------------------------------------------
+		// -----------------------------------------------------------------------------------
 
 		try (ServerSocket serverSocket = new ServerSocket()) {
 			InetSocketAddress direccion = new InetSocketAddress(PUERTO);
 
-			//Escuchar peticiones desde el puerto
+			// Para escuchar peticiones desde el puerto
 			serverSocket.bind(direccion);
 
 			System.out.println("SERVIDOR BIBLIOTECA: esperando peticion por el puerto " + PUERTO);
 
-			while(true) {
+			while (true) {
 
 				Socket socketAlCliente = serverSocket.accept();
 				System.out.println("SERVIDOR BIBLIOTECA: peticion numero " + ++peticion + " recibida");
@@ -54,11 +55,11 @@ public class SocketServidor {
 		ArrayList<Libro> libros = new ArrayList<Libro>();
 
 		Libro l1 = new Libro("1234", "La sombra del viento", "Carlos Ruiz Zafon", 10.95);
-		Libro l2 = new Libro("5678", "El juego del √Ångel", "Carlos Ruiz Zafon", 19.90);
+		Libro l2 = new Libro("5678", "El juego del ¡ngel", "Carlos Ruiz Zafon", 19.90);
 		Libro l3 = new Libro("4321", "El Codigo da Vinci", "Dan Brown", 16.95);
 		Libro l4 = new Libro("8765", "El diario de Ana Frank", "Anna Frank", 12.00);
 		Libro l5 = new Libro("1111", "Fundacion", "Isaac Asimov", 14.20);
-		//a√±adir libros
+		// aÒadir libros
 		libros.add(l1);
 		libros.add(l2);
 		libros.add(l3);

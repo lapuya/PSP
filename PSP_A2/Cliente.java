@@ -26,14 +26,14 @@ public class Cliente {
 
 			boolean continuar = true;
 			// Conectando el Socket con el servidor.
-			System.out.println("CLIENTE: Esperando a que el servidor acepte la conexiÃ³n");
+			System.out.println("CLIENTE: Esperando a que el servidor acepte la conexión");
 			Socket socketServidor = new Socket();
 			socketServidor.connect(direccionServidor);
 			System.out.println("CLIENTE: Conexion establecida... a " + IP_SERVER + " por el puerto " + PUERTO);
 			InputStreamReader entrada = new InputStreamReader(socketServidor.getInputStream());
 			BufferedReader bf = new BufferedReader(entrada);
 
-			// Lo que envÃ­a el Socket.
+			// Lo que envía el Socket.
 			PrintStream salida = new PrintStream(socketServidor.getOutputStream());
 
 			// Bucle do-while para poder hacer tantas peticiones de libros como se quiera
@@ -41,18 +41,16 @@ public class Cliente {
 
 			do {
 				System.out.println("");
-				System.out.println("Escriba el nÃºmero de la acciÃ³n deseada:");
+				System.out.println("Escriba el número de la acción deseada:");
 				System.out.println("");
 				System.out.println("1-Consultar libro por ISBN.");
-				System.out.println("2-Consultar libro por tÃ­tulo.");
+				System.out.println("2-Consultar libro por título.");
 				System.out.println("3-Consultar libro por autor.");
-				System.out.println("4-AÃ±adir libro.");
-				System.out.println("5-Salir de la aplicaciÃ³n;");
+				System.out.println("4-Añadir libro.");
+				System.out.println("5-Salir de la aplicación;");
 
-				// Se pide nÃºmero por pantalla para utilizar el menÃº
+				// Se pide número por pantalla para utilizar el menú
 				String n = sc.nextLine();
-
-
 
 				switch (n) {
 
@@ -61,48 +59,48 @@ public class Cliente {
 
 					System.out.println("Introduzca el ISBN del libro deseado: ");
 
-					// Le aÃ±ado el 'tipo' de dato que le estoy mandando (ISBN o tÃ­tulo) separado por
+					// Le añado el 'tipo' de dato que le estoy mandando (ISBN o título) separado por
 					// un '-'.
+
 					String busqueda = sc.nextLine() + "-1";
-
-
 					salida.println(busqueda);
 
 					// Lo que trae de vuelta el Socket.
 					System.out.println("CLIENTE: Esperando al resultado del servidor...");
 					resultado = bf.readLine();
-					System.out.println("CLIENTE: El resultado de la bÃºsqueda es: " + resultado.toString());
-
+					System.out.println("CLIENTE: El resultado de la búsqueda es: " + resultado.toString());
 					break;
 
-				// Repito lo anterior buscando por tÃ­tulo.
+				// Repito lo anterior buscando por título.
 				case "2":
-					System.out.println("Introduzca el tÃ­tulo del libro deseado: ");
+					System.out.println("Introduzca el título del libro deseado: ");
 
-					// Le aÃ±ado el 'tipo' de dato que le estoy mandando (ISBN o tÃ­tulo)
+					// Le añado el 'tipo' de dato que le estoy mandando (ISBN o título)
+
 					busqueda = sc.nextLine() + "-2";
-
 					salida.println(busqueda);
-
 					System.out.println("CLIENTE: Esperando al resultado del servidor...");
 					resultado = bf.readLine();
-					System.out.println("CLIENTE: El resultado de la bÃºsqueda es: " + resultado);
-
+					System.out.println("CLIENTE: El resultado de la búsqueda es: " + resultado);
 					break;
+
+				// Búsqueda de libro por autor.
 
 				case "3":
 					System.out.println("Introduzca el autor: ");
-
 					busqueda = sc.nextLine() + "-3";
-
 					salida.println(busqueda);
 					System.out.println("CLIENTE: Esperando al resultado del servidor...");
 					resultado = bf.readLine();
-					System.out.println("CLIENTE: El resultado de la bÃºsqueda es: " + resultado);
+					System.out.println("CLIENTE: El resultado de la búsqueda es: " + resultado);
 
 					break;
+
+				// Este caso le creamos para el requerimiento 3. Para añadir un libro a la base
+				// de datos.
+
 				case "4":
-					System.out.println("Introduzca los datos del libro a aÃ±adir.");
+					System.out.println("Introduzca los datos del libro a añadir.");
 					System.out.println("ISBN: ");
 					sb.append(sc.nextLine());
 					sb.append("-");
@@ -120,8 +118,10 @@ public class Cliente {
 					salida.println(libro);
 					System.out.println("CLIENTE: Esperando al resultado del servidor...");
 					resultado = bf.readLine();
-					System.out.println("CLIENTE: El resultado de la operaciÃ³n es: " + resultado);
+					System.out.println("CLIENTE: El resultado de la operación es: " + resultado);
 					break;
+
+				// Con esto salimos de la aplicación.
 
 				case "5":
 					busqueda = "5";
@@ -130,14 +130,13 @@ public class Cliente {
 					System.out.println("CLIENTE: El resultado del servidor es " + resultado);
 					continuar = false;
 					break;
-
 				default:
 					break;
 				}
 			} while (continuar);
 			socketServidor.close();
 		} catch (UnknownHostException e) {
-			System.err.println("CLIENTE: No encuentro el servidor en la direcciÃ³n" + IP_SERVER);
+			System.err.println("CLIENTE: No encuentro el servidor en la dirección" + IP_SERVER);
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.err.println("CLIENTE: Error de entrada/salida");
