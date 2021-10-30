@@ -34,6 +34,7 @@ public class HiloBiblioteca implements Runnable {
 			BufferedReader bf = new BufferedReader(entrada); // lee la linea de entrada
 			while (continuar) {
 				String stringRecibido = bf.readLine();
+				System.out.println(hilo.getName() + " ha realizado una peticion.");
 				System.out.println("HILO BIBLIOTECA: formato recibido: " + stringRecibido);
 				if (stringRecibido.equals("5")) {
 					System.out.println(hilo.getName() + " ha cerrado la comunicacion.");
@@ -46,10 +47,10 @@ public class HiloBiblioteca implements Runnable {
 						String formato = info[0];
 						String tipo = info[1];
 						analizarYBuscar(tipo, formato, libros, salida, socketAlCliente);
-					} else { // si hay mas es el de añadir
+					} else { // si hay mas es el de aï¿½adir
 						Libro l = new Libro(info[0], info[1], info[2], Double.parseDouble(info[3]));
 						libros.add(l);
-						System.out.println("HILO BIBLIOTECA: Libro añadido");
+						System.out.println("HILO BIBLIOTECA: Libro aï¿½adido");
 						salida = new PrintStream(socketAlCliente.getOutputStream());
 						salida.println("OK");
 					}
@@ -92,14 +93,14 @@ public class HiloBiblioteca implements Runnable {
 		} else if (tipo.contains("3")) { // Busqueda por autor
 			buscarPorAutor(formato, libros, salida, socketAlCliente);
 		}
-		if (i == libros.size()) {
+		if (i == libros.size()) { //si el libro no esta en la biblioteca
 			System.out.println("SERVIDOR BIBLIOTECA: Libro no disponible");
 			salida = new PrintStream(socketAlCliente.getOutputStream());
-			salida.println("El libro no está disponible o no se encuentra en la biblioteca");
+			salida.println("El libro no estï¿½ disponible o no se encuentra en la biblioteca");
 		}
 	}
 
-// Implementamos un arrayList para el requerimiento 2, por si hay más de un libro de un solo autor.
+// Implementamos un arrayList para el requerimiento 2, por si hay mï¿½s de un libro de un solo autor.
 	private void buscarPorAutor(String autor, ArrayList<Libro> libros, PrintStream salida, Socket socketAlCliente)
 			throws IOException {
 		StringBuilder sb = new StringBuilder();
