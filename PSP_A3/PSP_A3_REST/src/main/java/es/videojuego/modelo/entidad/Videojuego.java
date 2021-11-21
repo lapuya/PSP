@@ -1,5 +1,7 @@
 package es.videojuego.modelo.entidad;
 
+//Creamos la clase Videojueg con sus variables y respectivos getters and setters, constructores y método toString.
+
 public class Videojuego {
 	
 	private int id;
